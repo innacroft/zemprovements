@@ -5,7 +5,7 @@ Este script `release.sh` automatiza el proceso de creación de releases.
 ## Características
 - Lista los últimos releases para saber cual sería la próxima versión
 - Crea la versión del release respecto al número indicado
-- Crea la etiqueta y la documentación del release 
+- Crea la etiqueta y la documentación del release y lo setea como *last release* 
 - Crea y abre 3 pull requests hacia develop, staging y master 
 - Agrega la documentación del release en master
 - Asigna los pull requests y asigna la etiqueta de release a cada uno
