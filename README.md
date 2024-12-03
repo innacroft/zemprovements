@@ -29,4 +29,15 @@ sudo apt install gh
 
 
 ## Uso
+En la variable VERSION_FILES_JSON , se debe especificar el repositorio con la ubicacion del archivo de versión, por defecto se encuentra así:
+```
+VERSION_FILES_JSON='[
+  {"repo": "ms-catalog-zecore", "file": "package.json"},
+  {"repo": "ms-packages-middleware", "file": "__version__.py"},
+  {"repo": "ms-client-zecore", "file": "version.py"},
+  {"repo": "catalog-erpnext", "file": "/catalog/__init__.py"}
+]'
+```
+##⚠️ Se debe ejecutar el comando desde el la raíz del repositorio, sobre la rama sobre la cual se desea hacer el release.⚠️
+
 ![Descripción del GIF](https://github.com/innacroft/improvements/blob/main/screen-capture.gif)
