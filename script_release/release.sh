@@ -13,7 +13,8 @@ REPO_NAME=$(basename $(git rev-parse --show-toplevel))
 GITHUB_URL="https://github.com/luuna-tech"
 
 echo "===== Repository '$REPO_NAME'====="
-echo "Validar el ultimo tag release para crear uno nuevo: $GITHUB_URL/$REPO_NAME/tags"
+echo "Estos son los ultimos 3 tags releases disponibles:"
+gh release list | head -n 3
 echo -e "\n¿Deseas proceder? (Presiona Enter para confirmar, 'n' para cancelar y revertir): "
 read -r CONFIRM
 
@@ -34,7 +35,7 @@ validate_version_format() {
 
 # Solicitar la versión si no se proporciona como argumento
 if [ -z "$1" ]; then
-  read -p "Introduce la nueva versión con el formato '0.0.0': " INPUT_VERSION
+  read -p "Introduce los 3 números de la nueva versión con el formato 0.0.0 " INPUT_VERSION
 else
   INPUT_VERSION=$1
 fi
@@ -67,13 +68,13 @@ VERSION_FILES_JSON='[
   {"repo": "ms-catalog-zecore", "file": "package.json"},
   {"repo": "ms-packages-middleware", "file": "__version__.py"},
   {"repo": "ms-client-zecore", "file": "version.py"},
-  {"repo": "catalog-erpnext", "file": "/catalog/__init__.py"}
+  {"repo": "catalog", "file": "catalog/__init__.py"},
+  {"repo": "zecore_custom_native_doctype", "file": "zecore_custom_native_doctype/__init__.py"}
 ]'
 
 # Obtener la ruta del archivo de versión y la expresión regular según el nombre del repositorio
 REPO_INFO=$(echo "$VERSION_FILES_JSON" | jq -r --arg repo "$REPO_NAME" '.[] | select(.repo == $repo)')
 VERSION_FILE=$(echo "$REPO_INFO" | jq -r '.file')
-VERSION_REGEX=$(echo "$REPO_INFO" | jq -r '.regex')
 
 if [[ -z "$VERSION_FILE" || "$VERSION_FILE" == "null" ]]; then
   echo "Error: No se encuentra archivo de versión configurado para el repositorio '$REPO_NAME'."
@@ -94,7 +95,7 @@ fi
 if [ -f "$VERSION_FILE" ]; then
   if [[ "$REPO_NAME" == "ms-catalog-zecore" ]]; then
     # CUSTOMIZED: version is not the only line and there are multiple versions in the file
-    CURRENT_VERSION=$(awk '/"name": "ms-cart-zecore"/{getline; print}' "$VERSION_FILE" | grep -oP '(?<="version": ")[^"]*')
+    CURRENT_VERSION=$(jq -r 'select(.name == "ms-cart-zecore") | .version' "$VERSION_FILE")
   else
     CURRENT_VERSION=$(grep -oP '\b[0-9]+\.[0-9]+\.[0-9]+\b' "$VERSION_FILE")
   fi
@@ -115,7 +116,11 @@ fi
 
 
 # Actualizar la versión en el archivo de versión
-sed -i "s/\b[0-9]\+\.[0-9]\+\.[0-9]\+\b/$INPUT_VERSION/" "$VERSION_FILE"
+if [[ "$REPO_NAME" == "ms-catalog-zecore" ]]; then
+  jq --arg new_version "$INPUT_VERSION" '.version = $new_version' "$VERSION_FILE" > tmp.$$.json && mv tmp.$$.json "$VERSION_FILE"
+else
+  sed -i "s/\b[0-9]\+\.[0-9]\+\.[0-9]\+\b/$INPUT_VERSION/" "$VERSION_FILE"
+fi
 git add "$VERSION_FILE"
 git commit -m "Release/v$INPUT_VERSION"
 echo "Versión actualizada en el archivo '$VERSION_FILE'."
@@ -136,12 +141,25 @@ if [[ -z "$CONFIRM" || "$CONFIRM" == "y" || "$CONFIRM" == "Y" ]]; then
   git push "$REMOTE" "$BRANCH" > /dev/null
   git push "$REMOTE" "$VERSION_TAG" > /dev/null
   echo "Push completado en el remoto '$REMOTE'."
-    # Crear pull requests para develop, staging y master usando GitHub CLI
+  
+  # set release as latest and generate notes
+  gh release create "$VERSION_TAG" --title "$VERSION_TAG" --generate-notes --latest
+  # save release notes
+  RELEASE_NOTES=$(gh release view "$VERSION_TAG" --json body --jq .body)
+
   for TARGET_BRANCH in develop staging master; do
-    gh pr create --title "Release/$VERSION_TAG[$TARGET_BRANCH]" --body "Este pull request contiene la versión $VERSION_TAG." --base "$TARGET_BRANCH" --head "$BRANCH" --label "release" --assignee "@me"
+    if [[ "$TARGET_BRANCH" == "master" ]]; then
+    # apply release notes to master's PR body
+      PR_BODY="$RELEASE_NOTES"
+    else
+      PR_BODY="Version $VERSION_TAG."
+    fi
+    PR_TITLE="Release/$VERSION_TAG [$TARGET_BRANCH]"
+    gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base "$TARGET_BRANCH" --head "$BRANCH" --label "release" --assignee "@me"
     echo " ✅ Pull request creado para '$TARGET_BRANCH'."
   done
-  echo "ℹ️ No olvides generar el historial de cambios y agregarlos al PR de master: $GITHUB_URL/$REPO_NAME/releases/new ℹ️"
+  echo "Release Finalizado ✅ "
+  gh release list | head -n 1
 
 else
   echo "Push cancelado."

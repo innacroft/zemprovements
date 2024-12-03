@@ -1,6 +1,14 @@
 # Release Script BETA
 
-Este script `release.sh` automatiza el proceso de creación de una nueva versión, actualización de archivos de versión, creación de etiquetas y pull requests en GitHub.
+Este script `release.sh` automatiza el proceso de creación de releases.
+
+## Características
+- Lista los últimos releases para saber cual sería la próxima versión
+- Crea la versión del release respecto al número indicado
+- Crea la etiqueta y la documentación del release 
+- Crea y abre 3 pull requests hacia develop, staging y master 
+- Agrega la documentación del release en master
+- Asigna los pull requests y asigna la etiqueta de release a cada uno
 
 ## Requisitos
 
@@ -10,7 +18,7 @@ Asegúrate de tener instaladas las siguientes herramientas en tu sistema:
 - `gh` (GitHub CLI): Para interactuar con GitHub desde la línea de comandos.
 
 ### Instalación de Requisitos
-
+- Lista de 
 #### Ubuntu/Debian
 
 ```bash
@@ -32,15 +40,27 @@ sudo apt install gh
 
 
 ## Uso
-En la variable VERSION_FILES_JSON , se debe especificar el repositorio con la ubicacion del archivo de versión, por defecto se encuentra así:
+### NUEVOS REPOSITORIOS:
+- En la variable VERSION_FILES_JSON , se debe especificar el repositorio con la ubicacion del archivo de versión, por defecto se encuentra así:
 ```
 VERSION_FILES_JSON='[
   {"repo": "ms-catalog-zecore", "file": "package.json"},
   {"repo": "ms-packages-middleware", "file": "__version__.py"},
   {"repo": "ms-client-zecore", "file": "version.py"},
-  {"repo": "catalog-erpnext", "file": "/catalog/__init__.py"}
+  {"repo": "catalog", "file": "catalog/__init__.py"}, # ERPNEXT
+  {"repo": "zecore_custom_native_doctype", "file": "zecore_custom_native_doctype/__init__.py"} # ERPNEXT
 ]'
 ```
+- Asegurarse de que la etiqueta release exista en el repositorio.
+- Para casos especiales de archivos de version (formatos distintos) se deben agregar nuevas expresiones regulares.
 ## ⚠️ Se debe ejecutar el comando desde el la raíz del repositorio, sobre la rama sobre la cual se desea hacer el release.⚠️
+
+## Ejecucion
+- Al ejecutar el script primero se listarán los ultimos 3 releases realizados con ello se sabrá cual debería ser la versión más reciente. 
+- Al continuar con el proceso se ingresa la versión deseada usando el formato 0.0.0 por ejemplo 1.0.0
+- Al continuar se creará la rama de release si esta no existe, se cambiará la versión dentro del archivo de versión del proyecto, se hará push a la rama de release con la nueva versión
+- Se crearán los pull requests hacia developm staging y master respectivamente, con tag de release y se autoasignará a la persona.
+- Se creará el release como último dentro del listado de releases
+- Se agregará la descripción del release de forma automática a la rama de MASTER
 
 ![Descripción del GIF](https://github.com/innacroft/zemprovements/blob/main/script_release/screen-capture.gif)
