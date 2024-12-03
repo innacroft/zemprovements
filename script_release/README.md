@@ -59,7 +59,7 @@ VERSION_FILES_JSON='[
 ```
 - Asegurarse de que la etiqueta release exista en el repositorio.
 - Para casos especiales de archivos de version (formatos distintos) se deben agregar nuevas expresiones regulares.
-## ⚠️ Se debe ejecutar el comando desde el la raíz del repositorio, sobre la rama sobre la cual se desea hacer el release.⚠️
+## ⚠️ Se debe ejecutar el comando desde la raíz del repositorio, sobre la rama sobre la cual se desea hacer el release.⚠️
 
 ## Ejecucion
 - Al ejecutar el script primero se listarán los ultimos 3 releases realizados con ello se sabrá cual debería ser la versión más reciente. 
