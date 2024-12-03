@@ -43,4 +43,4 @@ VERSION_FILES_JSON='[
 ```
 ## ⚠️ Se debe ejecutar el comando desde el la raíz del repositorio, sobre la rama sobre la cual se desea hacer el release.⚠️
 
-![Descripción del GIF](https://github.com/innacroft/improvements/blob/main/screen-capture.gif)
+![Descripción del GIF](https://github.com/innacroft/zemprovements/blob/main/script_release/screen-capture.gif)
