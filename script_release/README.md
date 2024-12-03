@@ -1,4 +1,4 @@
-# Release Script
+# Release Script BETA
 
 Este script `release.sh` automatiza el proceso de creación de una nueva versión, actualización de archivos de versión, creación de etiquetas y pull requests en GitHub.
 
