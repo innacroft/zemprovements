@@ -40,6 +40,13 @@ sudo apt install gh
 
 
 ## Uso
+Repositorios disponibles:
+- https://github.com/luuna-tech/ms-catalog-zecore
+- https://github.com/luuna-tech/ms-packages-middleware
+- https://github.com/luuna-tech/ms-client-zecore
+- https://github.com/luuna-tech/catalog-erpnext
+- https://github.com/luuna-tech/zecore_custom_native_doctype
+
 ### NUEVOS REPOSITORIOS:
 - En la variable VERSION_FILES_JSON , se debe especificar el repositorio con la ubicacion del archivo de versión, por defecto se encuentra así:
 ```
