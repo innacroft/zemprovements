@@ -25,8 +25,7 @@ sudo apt install gh
 ################################ 
 - Agregar al archivo de aliases en linux
 - En ubuntu buscar alguno de estos archivos `bash`: `~/.bashrc` o `~/.bash_aliases`, al final agregar:
-```alias startrelease="/path_on_your_machine/release.sh"
-```
+alias startrelease="/path_on_your_machine/release.sh"
 - Conceder permisos de ejecución  ```sudo chmod 755 /path_on_your_machine/bashes```
 - Reiniciar la terminal
 - Por último ejecutar el comando con el nombre asignado, en el ejemplo es startrelease
