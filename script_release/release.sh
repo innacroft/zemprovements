@@ -35,7 +35,7 @@ validate_version_format() {
 
 # Solicitar la versión si no se proporciona como argumento
 if [ -z "$1" ]; then
-  read -p "Introduce los 3 números de la nueva versión con el formato 0.0.0 " INPUT_VERSION
+  read -p "Introduce la nueva versión con el formato 0.0.0: " INPUT_VERSION
 else
   INPUT_VERSION=$1
 fi

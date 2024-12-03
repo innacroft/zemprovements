@@ -18,7 +18,6 @@ Asegúrate de tener instaladas las siguientes herramientas en tu sistema:
 - `gh` (GitHub CLI): Para interactuar con GitHub desde la línea de comandos.
 
 ### Instalación de Requisitos
-- Lista de 
 #### Ubuntu/Debian
 
 ```bash
