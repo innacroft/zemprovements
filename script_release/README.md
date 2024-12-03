@@ -28,6 +28,7 @@ sudo chmod go+r [githubcli-archive-keyring.gpg](http://_vscodecontentref_/1)
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee [github-cli.list](http://_vscodecontentref_/2) > /dev/null
 sudo apt update
 sudo apt install gh
+gh auth login - github,ssh, select key,login with web browser
 ```
 ################################ 
 - Agregar al archivo de aliases en linux
