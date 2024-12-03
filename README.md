@@ -21,7 +21,7 @@ sudo chmod go+r [githubcli-archive-keyring.gpg](http://_vscodecontentref_/1)
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee [github-cli.list](http://_vscodecontentref_/2) > /dev/null
 sudo apt update
 sudo apt install gh
-
+```
 ################################ 
 - Agregar al archivo de aliases en linux
 - Para `bash`: `~/.bashrc` o `~/.bash_aliases`
@@ -29,4 +29,4 @@ sudo apt install gh
 
 
 ## Uso
-![Descripción del GIF](ruta/al/gif.gif)
+![Descripción del GIF](https://github.com/innacroft/improvements/blob/main/screen-capture.gif)
