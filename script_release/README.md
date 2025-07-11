@@ -9,6 +9,7 @@ Este script `release.sh` automatiza el proceso de creación de releases.
 - Crea y abre 3 pull requests hacia develop, staging y master 
 - Agrega la documentación del release en master
 - Asigna los pull requests y asigna la etiqueta de release a cada uno
+- Agrega el valor [ ] Requires migration en los readme de los PR segun se seleccione
 
 ## Requisitos
 
