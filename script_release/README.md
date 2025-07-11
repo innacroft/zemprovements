@@ -31,8 +31,15 @@ sudo apt install gh
 gh auth login 
    github,ssh, select key,login with web browser
 ```
+
+#### MacOS
+Mismos pasos de arriba pero al instalar gh:
+
+```bash
+ brew install gh
+ ```
 ################################ 
-- Agregar al archivo de aliases en linux
+- Agregar al archivo de aliases ya sea en linux o mac
 - En ubuntu buscar alguno de estos archivos `bash`: `~/.bashrc` o `~/.bash_aliases`, al final agregar:
 ```alias startrelease="/path_on_your_machine/release.sh"```
 - Conceder permisos de ejecución  ```sudo chmod 755 /path_on_your_machine/bashes```
@@ -47,6 +54,7 @@ Repositorios disponibles:
 - https://github.com/luuna-tech/ms-client-zecore
 - https://github.com/luuna-tech/catalog-erpnext
 - https://github.com/luuna-tech/zecore_custom_native_doctype
+- https://github.com/luuna-tech/zecore_reviews
 
 ### NUEVOS REPOSITORIOS:
 - En la variable VERSION_FILES_JSON , se debe especificar el repositorio con la ubicacion del archivo de versión, por defecto se encuentra así:
@@ -57,11 +65,12 @@ VERSION_FILES_JSON='[
   {"repo": "ms-client-zecore", "file": "version.py"},
   {"repo": "catalog", "file": "catalog/__init__.py"}, # ERPNEXT
   {"repo": "zecore_custom_native_doctype", "file": "zecore_custom_native_doctype/__init__.py"} # ERPNEXT
+  {"repo": "zecore_reviews", "file": "zecore_reviews/__init__.py"}  # ERPNEXT
 ]'
 ```
 - Asegurarse de que la etiqueta release exista en el repositorio.
 - Para casos especiales de archivos de version (formatos distintos) se deben agregar nuevas expresiones regulares.
-## ⚠️ Se debe ejecutar el comando desde la raíz del repositorio, sobre la rama sobre la cual se desea hacer el release.⚠️
+## ⚠️ Se debe ejecutar el comando sobre la rama sobre la cual se desea hacer el release.⚠️
 
 ## Ejecucion
 - Al ejecutar el script primero se listarán los ultimos 3 releases realizados con ello se sabrá cual debería ser la versión más reciente. 

@@ -69,7 +69,8 @@ VERSION_FILES_JSON='[
   {"repo": "ms-packages-middleware", "file": "__version__.py"},
   {"repo": "ms-client-zecore", "file": "version.py"},
   {"repo": "catalog", "file": "catalog/__init__.py"},
-  {"repo": "zecore_custom_native_doctype", "file": "zecore_custom_native_doctype/__init__.py"}
+  {"repo": "zecore_custom_native_doctype", "file": "zecore_custom_native_doctype/__init__.py"},
+  {"repo": "zecore_reviews", "file": "zecore_reviews/__init__.py"}
 ]'
 
 # Obtener la ruta del archivo de versión y la expresión regular según el nombre del repositorio
