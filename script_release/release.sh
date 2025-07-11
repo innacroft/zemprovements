@@ -146,13 +146,21 @@ if [[ -z "$CONFIRM" || "$CONFIRM" == "y" || "$CONFIRM" == "Y" ]]; then
   gh release create "$VERSION_TAG" --title "$VERSION_TAG" --generate-notes --latest
   # save release notes
   RELEASE_NOTES=$(gh release view "$VERSION_TAG" --json body --jq .body)
+  # Preguntar si requiere migración
+  echo -e "\n¿Este release requiere migración? (y/N): "
+  read -r REQUIRES_MIGRATION
 
+  if [[ "$REQUIRES_MIGRATION" =~ ^[yY]$ ]]; then
+    MIGRATION_SECTION="#### Other options (do not remove):"$'\n'"- [X]  Requires migration"
+  else
+    MIGRATION_SECTION="#### Other options (do not remove):"$'\n'"- [ ]  Requires migration"
+  fi
   for TARGET_BRANCH in develop staging master; do
     if [[ "$TARGET_BRANCH" == "master" ]]; then
     # apply release notes to master's PR body
-      PR_BODY="$RELEASE_NOTES"
+      PR_BODY="$RELEASE_NOTES"$'\n\n'"$MIGRATION_SECTION"
     else
-      PR_BODY="Version $VERSION_TAG."
+      PR_BODY="Version $VERSION_TAG."$'\n\n'"$MIGRATION_SECTION"
     fi
     PR_TITLE="Release/$VERSION_TAG [$TARGET_BRANCH]"
     gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base "$TARGET_BRANCH" --head "$BRANCH" --label "release" --assignee "@me"
